@@ -454,10 +454,12 @@ CreateThread(function()
         if CurrentPump and not IsMounted and CurrentPump ~= "can" then       --Check max distance
             if #(GetEntityCoords(ped) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
                 TriggerEvent('qb-fuel:PickupPump')
+                QBCore.Functions.Notify(Lang:t("message.to_far_away"), "error")
             end
         end
         if IsMounted and #(GetEntityCoords(CurrentVehicle) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
             TriggerEvent('qb-fuel:PickupPump')
+            QBCore.Functions.Notify(Lang:t("message.to_far_away"), "error")
         end
     end
 end)

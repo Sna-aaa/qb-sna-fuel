@@ -17,6 +17,7 @@ local Translations = {
         jerrican_bought = "Jerrican bought",
         no_money = "You have not enough money",
         must_be_driver = "You must be driver to do that",
+        to_far_away = "You are to far away, the hose snapped"
     }
 }
 
