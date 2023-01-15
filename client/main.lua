@@ -72,7 +72,7 @@ CreateThread(function() -- Set target for pumps and blips
             entity = entity
         }, {
             event = "qb-fuel:BuyJerrican",
-            icon = "fas fa-gas-can",
+            icon = "fas fa-cart-shopping",
             label = Lang:t("info.buy_jerrican"),
             entity = entity
         }},
