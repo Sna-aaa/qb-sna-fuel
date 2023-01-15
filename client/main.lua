@@ -457,8 +457,7 @@ CreateThread(function()
                 QBCore.Functions.Notify(Lang:t("message.to_far_away"), "error")
             end
         end
-        if IsMounted and CurrentPump ~= "can" and
-            #(GetEntityCoords(CurrentVehicle) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
+        if IsMounted and CurrentPump ~= "can" and #(GetEntityCoords(CurrentVehicle) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
             IsFueling = false
             IsMounted = false
             Wait(1000)
