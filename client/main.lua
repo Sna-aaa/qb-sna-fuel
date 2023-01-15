@@ -193,7 +193,7 @@ RegisterNetEvent("qb-fuel:PickupPump", function(data)
             Wait(1)
         end
 
-        --print(GetEntityModel(CurrentPump))
+        print(GetEntityModel(CurrentPump))
 
         local pumpcoords = GetEntityCoords(CurrentPump)
         local netIdProp = ObjToNet(CurrentPumpProp)     -- NetworkGetNetworkIdFromEntity(CurrentPumpProp)
@@ -232,6 +232,9 @@ RegisterNetEvent("qb-fuel:RefuelVehicle", function(ped, vehicle)
             end
         else
             fuelToAdd = ((tank - currentFuel) / (tank - (tank * 0.8)))^(1.0/6.0)
+            if currentFuel + fuelToAdd > tank then
+                fuelToAdd = tank - currentFuel
+            end
         end
         currentFuel = currentFuel + fuelToAdd
         if currentFuel <= tank then
@@ -448,7 +451,7 @@ CreateThread(function()
                 end
             end
         end
-        if CurrentPump and not IsMounted then       --Check max distance
+        if CurrentPump and not IsMounted and CurrentPump ~= "can" then       --Check max distance
             if #(GetEntityCoords(ped) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
                 TriggerEvent('qb-fuel:PickupPump')
             end
