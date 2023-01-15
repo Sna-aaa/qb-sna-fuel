@@ -21,7 +21,9 @@ local Translations = {
     }
 }
 
-Lang = Lang or Locale:new({
-    phrases = Translations,
-    warnOnMissing = true
-})
+if GetConvar('qb_locale', 'en') == 'de' then
+    Lang = Lang or Locale:new({
+        phrases = Translations,
+        warnOnMissing = true
+    })
+end
