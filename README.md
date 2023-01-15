@@ -17,6 +17,7 @@ Fuel script that cover all vehicles, fuel, electric, air, sea
 - Admin command /fuel to refuel/charge vehicles
 - Working jerrican for fuel vehicles
 - Jerrican capacity is configurable
+- A new export "ApplyFuel" to apply fuel without electric charge for persistence scripts
 
 ## Requirements
 - [qb-core](https://github.com/qbcore-framework/qb-core)

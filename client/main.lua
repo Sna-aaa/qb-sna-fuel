@@ -57,11 +57,6 @@ function SetFuel(vehicle, fuel)
 end
 exports('SetFuel', SetFuel)
 
-
-
-
-
-
 CreateThread(function() -- Set target for pumps and blips
     local Pumps = {}
 
