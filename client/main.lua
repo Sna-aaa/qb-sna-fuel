@@ -224,7 +224,7 @@ RegisterNetEvent("qb-fuel:RefuelVehicle", function(ped, vehicle)
         Wait(500)
         local currentFuel = DecorGetFloat(vehicle, Config.FuelDecor)
         local fuelToAdd
-        if not Config.PumpModels[GetEntityModel(CurrentPump)].electric then
+        if Config.PumpModels[GetEntityModel(CurrentPump)] and not Config.PumpModels[GetEntityModel(CurrentPump)].electric then
             if currentFuel + 1.0 > tank then
                 fuelToAdd = tank - currentFuel
             else
