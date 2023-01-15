@@ -456,6 +456,9 @@ CreateThread(function()
                 TriggerEvent('qb-fuel:PickupPump')
             end
         end
+        if IsMounted and #(GetEntityCoords(CurrentVehicle) - GetEntityCoords(CurrentPump)) >= Config.RopeMaxLength then
+            TriggerEvent('qb-fuel:PickupPump')
+        end
     end
 end)
 
