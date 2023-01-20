@@ -1,9 +1,12 @@
 # qb-sna-fuel
-Fuel script that cover all vehicles, fuel, electric, air, sea
+Fuel script that cover all vehicles, fuel, electric, air, sea with fuel nozzles and electric charging
+
+Video : https://youtu.be/JC8tyz8AI5E
+Package : https://github.com/Sna-aaa/qb-sna-fuel
 
 ## Features
 - Pumps with nozzle for electric or fuel
-- Gaz pump for fuel vehicles
+- Gas pump for fuel vehicles
 - Electric chargers for electric vehicles
 - Out of energies are handled by the script, the vehicle just stop his motor, no more sparks and backwards
 - Every vehicles excepted blacklisted ones will stop when out of energy
@@ -18,6 +21,7 @@ Fuel script that cover all vehicles, fuel, electric, air, sea
 - Working jerrican for fuel vehicles
 - Jerrican capacity is configurable
 - A new export "ApplyFuel" to apply fuel without electric charge for persistence scripts
+- Server synced nozzles and hozes
 
 ## Requirements
 - [qb-core](https://github.com/qbcore-framework/qb-core)

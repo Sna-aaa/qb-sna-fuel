@@ -2,9 +2,9 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local CurrentWeaponData
 
 local CurrentPumpProp
-local CurrentPumpObj
+local CurrentPumpObj = {}
 local CurrentPump
-local CurrentRope
+local CurrentRope = {}
 local CurrentVehicle
 local CurrentBone
 local CurrentCapPos
@@ -96,7 +96,7 @@ CreateThread(function() -- Set target for pumps and blips
         local blip = AddBlipForCoord(elecStationCoords.x, elecStationCoords.y, elecStationCoords.z)
 
         SetBlipSprite(blip, 354)
-        SetBlipScale(blip, 0.6)
+        SetBlipScale(blip, 0.8)
         SetBlipColour(blip, 4)
         SetBlipDisplay(blip, 4)
         SetBlipAsShortRange(blip, true)
@@ -170,7 +170,7 @@ end
 
 RegisterNetEvent("qb-fuel:PickupPump", function(data)
     if CurrentPump then
-        TriggerServerEvent('qb-fuel:server:DetachRope')
+        TriggerServerEvent('qb-fuel:server:DetachRope', PlayerPedId())
         exports['qb-core']:KeyPressed()
         Wait(7)
         -- exports['qb-core']:HideText()
@@ -200,7 +200,7 @@ RegisterNetEvent("qb-fuel:PickupPump", function(data)
         SetNetworkIdExistsOnAllMachines(netIdProp, true)
         NetworkSetNetworkIdDynamic(netIdProp, true)
         SetNetworkIdCanMigrate(netIdProp, false)
-        TriggerServerEvent('qb-fuel:server:AttachRope', netIdProp, pumpcoords, GetEntityModel(CurrentPump), playerPed)
+        TriggerServerEvent('qb-fuel:server:AttachRope', netIdProp, pumpcoords, GetEntityModel(CurrentPump))
     
         IsMounted = false
         DetectPetrolCap(Config.PumpModels[GetEntityModel(CurrentPump)].electric)
@@ -495,16 +495,15 @@ RegisterNetEvent("qb-fuel:SetFuel", function(fuel)
     end
 end)
 
-RegisterNetEvent("qb-fuel:client:AttachRope", function(netIdProp, posPump, model, src)
-    CurrentSource = src
+RegisterNetEvent("qb-fuel:client:AttachRope", function(netIdProp, posPump, model, citizenid)
     local object = GetHashKey('bkr_prop_bkr_cash_roll_01')
     RequestModel(object)
     while not HasModelLoaded(object) do
         Wait(1)
     end
-    CurrentPumpObj = CreateObject(object, posPump.x, posPump.y, posPump.z, true, true, false)
-    SetEntityRecordsCollisions(CurrentPumpObj, false)
-    SetEntityLoadCollisionFlag(CurrentPumpObj, false)
+    CurrentPumpObj[citizenid] = CreateObject(object, posPump.x, posPump.y, posPump.z, true, true, false)
+    SetEntityRecordsCollisions(CurrentPumpObj[citizenid], false)
+    SetEntityLoadCollisionFlag(CurrentPumpObj[citizenid], false)
     local timeout = 0
     local IdProp
     while true do
@@ -522,22 +521,21 @@ RegisterNetEvent("qb-fuel:client:AttachRope", function(netIdProp, posPump, model
 
     local pumppropcoords = GetOffsetFromEntityInWorldCoords(IdProp, 0.0, -0.019, -0.1749)
 
-    CurrentRope = AddRope(posPump.x, posPump.y, posPump.z + Config.PumpModels[model].z, 0.0, 0.0, 0.0, Config.RopeLength, 1, 1000.0, 0.5, 1.0, false, false, false, 5.0, false, 0)
-    AttachEntitiesToRope(CurrentRope, IdProp, CurrentPumpObj, pumppropcoords.x, pumppropcoords.y, pumppropcoords.z, posPump.x, posPump.y, posPump.z + Config.PumpModels[model].z, Config.RopeMaxLength, 0, 0)
+    CurrentRope[citizenid] = AddRope(posPump.x, posPump.y, posPump.z + Config.PumpModels[model].z, 0.0, 0.0, 0.0, Config.RopeLength, 1, 1000.0, 0.5, 1.0, false, false, false, 5.0, false, 0)
+    AttachEntitiesToRope(CurrentRope[citizenid], IdProp, CurrentPumpObj[citizenid], pumppropcoords.x, pumppropcoords.y, pumppropcoords.z, posPump.x, posPump.y, posPump.z + Config.PumpModels[model].z, Config.RopeMaxLength, 0, 0)
 end)
 
-RegisterNetEvent("qb-fuel:client:DetachRope", function()
-    DetachRopeFromEntity(CurrentRope, CurrentPumpProp)
-    DeleteRope(CurrentRope)
-    DeleteEntity(CurrentPumpObj)
-    CurrentPump = nil
-    CurrentRope = nil
-    CurrentCapPos = nil
-    CurrentVehicle = nil
-    CurrentBone = nil
-    if PlayerPedId() == CurrentSource then
+RegisterNetEvent("qb-fuel:client:DetachRope", function(citizenid, src)
+    DetachRopeFromEntity(CurrentRope[citizenid], CurrentPumpProp)
+    DeleteRope(CurrentRope[citizenid])
+    DeleteEntity(CurrentPumpObj[citizenid])
+    if PlayerPedId() == src then
         DetachEntity(CurrentPumpProp, true, true)
         DeleteEntity(CurrentPumpProp)
         CurrentPumpProp = nil
+        CurrentPump = nil
+        CurrentCapPos = nil
+        CurrentVehicle = nil
+        CurrentBone = nil
     end
 end)

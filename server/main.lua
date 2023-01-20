@@ -13,12 +13,16 @@ RegisterServerEvent('qb-fuel:server:GiveJerrican', function()
     TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items["weapon_petrolcan"], "add")
 end)
 
-RegisterServerEvent('qb-fuel:server:AttachRope', function(netIdProp, coordPumps, model, src)
-    TriggerClientEvent('qb-fuel:client:AttachRope', -1, netIdProp, coordPumps, model, src)
+RegisterServerEvent('qb-fuel:server:AttachRope', function(netIdProp, coordPumps, model)
+	local src = source
+    local citizenid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid    
+    TriggerClientEvent('qb-fuel:client:AttachRope', -1, netIdProp, coordPumps, model, citizenid)
 end)
 
-RegisterServerEvent('qb-fuel:server:DetachRope', function()
-    TriggerClientEvent('qb-fuel:client:DetachRope', -1)
+RegisterServerEvent('qb-fuel:server:DetachRope', function(src)
+	local srctemp = source
+    local citizenid = QBCore.Functions.GetPlayer(srctemp).PlayerData.citizenid    
+    TriggerClientEvent('qb-fuel:client:DetachRope', -1, citizenid, src)
 end)
 
 RegisterNetEvent('qb-fuel:server:UpdateVehicleDateTimeIn', function(plate)
