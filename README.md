@@ -32,7 +32,17 @@ Package : https://github.com/Sna-aaa/qb-sna-fuel
 
 1) Remove any fuel or electricity script that you may have including LegacyFuel, ps-fuel etc
 
-2) Replace all occurences of "LegacyFuel" by "qb-sna-fuel" (or wathever your directory name is) in all your server resources exports
+2) Replace all occurences of "LegacyFuel" by "qb-sna-fuel" (or wathever your directory name is) in all your Legacyfuel compatible resources
+2a) Look in all your resources the use of native GetVehicleFuelLevel for non Legacyfuel compatible resources
+    When this native is found it must be replaced by the export like this
+```lua
+    exports['qb-sna-fuel']:GetFuel(vehicle)
+```
+2b) Look in all your resources the use of native SetVehicleFuelLevel for non Legacyfuel compatible resources
+    When this native is found it must be replaced by the export like this
+```lua
+    exports['qb-sna-fuel']:SetFuel(vehicle, fuelpercentage)
+```
 
 3) If you want to use the auto charging function for electric vehicles in garage:
 - Import the database.sql in your database
