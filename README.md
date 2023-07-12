@@ -137,7 +137,7 @@ end)
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
-        if IsPedShooting(ped) and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then          --Change
+        if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) or IsPedShooting(ped) and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
             local weapon = GetSelectedPedWeapon(ped)
             local ammo = GetAmmoInPedWeapon(ped, weapon)
             TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
