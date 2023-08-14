@@ -24,6 +24,8 @@ client_scripts {
 	'client/main.lua'
 }
 
+provide 'LegacyFuel'
+
 dependencies {
   'qb-target'
 }
