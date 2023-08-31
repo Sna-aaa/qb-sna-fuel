@@ -150,7 +150,9 @@ Config.GasStations = {
     vector3(176.631, -1562.025, 29.263),
     vector3(-319.292, -1471.715, 30.549), 
     vector3(-66.48, -2532.57, 6.14),
-    vector3(1784.324, 3330.55, 41.253)
+    vector3(1784.324, 3330.55, 41.253),
+    -- UNCOMMENT THE LINE BELOW IF YOU USE GABZ OTTOS AUTO
+    --[[vector3(806.42, -789.94, 26.31)]]
 }
 
 Config.SuperchargerStations = {
